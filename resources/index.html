@@ -9,17 +9,82 @@
 
 <body>
 
-    <canvas id="gameboard">
+    <div class="container">
+        <canvas id="gameboard"></canvas>
+        <div id="menu">
+            <input id="username", placeholder="Username" type="text"/>
+            <button id="username_btn">OK</button>
+        </div>
+    </div>
 
-    </canvas>
 
     <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="game.js">
     </script>
     <script>
+
         const socket = io();
         game.setup(document.getElementById("gameboard"), socket, 800, 600);
+
+
+        setName = function (e) { 
+            game.players[0].name = $('#username')[0].value;
+            $('#menu')[0].style.visibility = 'hidden';
+        }
+
+        $('#username_btn')[0].addEventListener('click', function(e){
+            setName(e);
+            game.emitPlayer();
+            setTimeout(game.run(), 100);
+        });
+
+        $('#username')[0].addEventListener('keypress', function(e){
+            if(e.key == 'enter') {
+                setName(e)
+                game.emitPlayer();
+                setTimeout(game.run(), 100);
+            }
+        });
+
+        window.addEventListener('keydown', function(e){
+            switch(e.key.toLowerCase()){
+                case 'a': {
+                    game.keys_pressed.a = true;
+                    game.players[0].current_tilt = 1;
+                    break;
+                }
+                case 'd': {
+                    game.keys_pressed.d = true;
+                    game.players[0].current_tilt = -1;
+                    break;
+                }
+                default: break;
+            }
+        });
+        window.addEventListener('keyup', function(e){
+            switch(e.key.toLowerCase()){
+                case 'a': {
+                    if(game.keys_pressed.a && game.keys_pressed.d){
+                        game.players[0].current_tilt = -1;
+                    } else {
+                        game.players[0].current_tilt = 0;
+                    }
+                    game.keys_pressed.a = false;
+                    break;
+                }
+                case 'd': {
+                    if(game.keys_pressed.a && game.keys_pressed.d){
+                        game.players[0].current_tilt = 1;
+                    } else {
+                        game.players[0].current_tilt = 0;
+                    }
+                    game.keys_pressed.d = false;
+                    break;
+                }
+                default: break;
+            }
+        });
     </script>
 </body>
 

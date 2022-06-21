@@ -7,11 +7,10 @@ const http = require('http');
 const httpServer = http.createServer(app);
 
 const { Server } = require("socket.io");
-const io = new Server(httpServer);s
+const io = new Server(httpServer);
 
 
 var globs = {users: []};
 
-require('./controllers/indexController.js')(httpServer);
-require('./controllers/playerIO.js')(io, globs);
-require('./utils/logger.js')(globs);
+require('./controllers/index_controller.js')(httpServer);
+require('./controllers/player_io.js')(io, globs);

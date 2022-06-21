@@ -8,4 +8,22 @@ body{
     outline: black 3px solid;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 100px;
+}
+#menu {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: fit-content;
+}
+input{
+    height: 30px;
+    width: 200px;
+}
+button{
+    width: 50px;
+    height: 36px;
+}
+.container {
+    height: 800;
 }
