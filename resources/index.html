@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <canvas id="gameboard">
+
+    </canvas>
+
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="game.js">
+    </script>
+    <script>
+        const socket = io();
+        game.setup(document.getElementById("gameboard"), socket, 800, 600);
+    </script>
+</body>
+
+</html>

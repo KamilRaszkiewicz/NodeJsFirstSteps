@@ -1,14 +1,17 @@
+const express = require('express');
+
+const app = express();
+app.use(express.static("resources"));
+
 const http = require('http');
+const httpServer = http.createServer(app);
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const { Server } = require("socket.io");
+const io = new Server(httpServer);s
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+var globs = {users: []};
+
+require('./controllers/indexController.js')(httpServer);
+require('./controllers/playerIO.js')(io, globs);
+require('./utils/logger.js')(globs);
